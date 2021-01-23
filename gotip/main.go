@@ -210,7 +210,7 @@ func goroot(version string) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("failed to get home directory: %v", err)
 	}
-	return filepath.Join(home, "sdk", version), nil
+	return filepath.Join(home, "Cache/go_sdk", version), nil
 }
 
 func homedir() (string, error) {
