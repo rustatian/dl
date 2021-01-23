@@ -1,3 +1,3 @@
-module golang.org/dl
+module github.com/48d90782/dl
 
-go 1.11
+go 1.15

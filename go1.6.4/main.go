@@ -6,7 +6,7 @@
 //
 // To install, run:
 //
-//     $ go get golang.org/dl/go1.6.4
+//     $ go get github.com/48d90782/dl/go1.6.4
 //     $ go1.6.4 download
 //
 // And then use the go1.6.4 command as if it were your normal go
@@ -17,7 +17,7 @@
 // File bugs at https://golang.org/issues/new
 package main
 
-import "golang.org/dl/internal/version"
+import "github.com/48d90782/dl/internal/version"
 
 func main() {
 	version.Run("go1.6.4")

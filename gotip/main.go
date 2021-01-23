@@ -6,7 +6,7 @@
 //
 // To install, run:
 //
-//     $ go get golang.org/dl/gotip
+//     $ go get github.com/48d90782/dl/gotip
 //     $ gotip download
 //
 // And then use the gotip command as if it were your normal go command.
