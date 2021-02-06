@@ -144,7 +144,9 @@ func unpackTarGz(targetDir, archiveFile string) error {
 	if err != nil {
 		return err
 	}
-	defer r.Close()
+	defer func() {
+		_ = r.Close()
+	}()
 	madeDir := map[string]bool{}
 	zr, err := gzip.NewReader(r)
 	if err != nil {
@@ -222,7 +224,9 @@ func unpackZip(targetDir, archiveFile string) error {
 	if err != nil {
 		return err
 	}
-	defer zr.Close()
+	defer func() {
+		_ = zr.Close()
+	}()
 
 	for _, f := range zr.File {
 		name := strings.TrimPrefix(f.Name, "go/")
@@ -249,9 +253,9 @@ func unpackZip(targetDir, archiveFile string) error {
 			return err
 		}
 		_, err = io.Copy(out, rc)
-		rc.Close()
+		_ = rc.Close()
 		if err != nil {
-			out.Close()
+			_ = out.Close()
 			return err
 		}
 		if err := out.Close(); err != nil {
@@ -268,7 +272,9 @@ func verifySHA256(file, wantHex string) error {
 	if err != nil {
 		return err
 	}
-	defer f.Close()
+	defer func() {
+		_ = f.Close()
+	}()
 	hash := sha256.New()
 	if _, err := io.Copy(hash, f); err != nil {
 		return err
@@ -285,7 +291,9 @@ func slurpURLToString(url_ string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	defer res.Body.Close()
+	defer func() {
+		_ = res.Body.Close()
+	}()
 	if res.StatusCode != http.StatusOK {
 		return "", fmt.Errorf("%s: %v", url_, res.Status)
 	}
@@ -304,8 +312,8 @@ func copyFromURL(dstFile, srcURL string) (err error) {
 	}
 	defer func() {
 		if err != nil {
-			f.Close()
-			os.Remove(dstFile)
+			_ = f.Close()
+			_ = os.Remove(dstFile)
 		}
 	}()
 	c := &http.Client{
@@ -321,7 +329,9 @@ func copyFromURL(dstFile, srcURL string) (err error) {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer func() {
+		_ = res.Body.Close()
+	}()
 	if res.StatusCode != http.StatusOK {
 		return errors.New(res.Status)
 	}
@@ -349,7 +359,7 @@ func (p *progressWriter) update() {
 	if p.n == p.total {
 		end = ""
 	}
-	fmt.Fprintf(os.Stderr, "Downloaded %5.1f%% (%*d / %d bytes)%s\n",
+	_, _ = fmt.Fprintf(os.Stderr, "Downloaded %5.1f%% (%*d / %d bytes)%s\n",
 		(100.0*float64(p.n))/float64(p.total),
 		ndigits(p.total), p.n, p.total, end)
 }

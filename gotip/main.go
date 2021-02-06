@@ -106,9 +106,9 @@ func installTip(root, clNumber string) error {
 	}
 
 	if clNumber != "" {
-		fmt.Fprintf(os.Stderr, "This will download and execute code from golang.org/cl/%s, continue? [y/n] ", clNumber)
+		_, _ = fmt.Fprintf(os.Stderr, "This will download and execute code from golang.org/cl/%s, continue? [y/n] ", clNumber)
 		var answer string
-		if fmt.Scanln(&answer); answer != "y" {
+		if _, _ = fmt.Scanln(&answer); answer != "y" {
 			return fmt.Errorf("interrupted")
 		}
 
