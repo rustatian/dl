@@ -6,10 +6,10 @@
 //
 // To install, run:
 //
-//     $ go get golang.org/dl/go1.16rc1
-//     $ go1.16rc1 download
+//     $ go get golang.org/dl/go1.16
+//     $ go1.16 download
 //
-// And then use the go1.16rc1 command as if it were your normal go
+// And then use the go1.16 command as if it were your normal go
 // command.
 //
 // See the release notes at https://tip.golang.org/doc/go1.16
@@ -20,5 +20,5 @@ package main
 import "github.com/48d90782/dl/internal/version"
 
 func main() {
-	version.Run("go1.16rc1")
+	version.Run("go1.16")
 }
