@@ -2,17 +2,17 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-// The go1.15.8 command runs the go command from Go 1.15.8.
+// The go1.17beta1 command runs the go command from Go 1.17beta1.
 //
 // To install, run:
 //
-//     $ go get golang.org/dl/go1.15.8
-//     $ go1.15.8 download
+//     $ go get golang.org/dl/go1.17beta1
+//     $ go1.17beta1 download
 //
-// And then use the go1.15.8 command as if it were your normal go
+// And then use the go1.17beta1 command as if it were your normal go
 // command.
 //
-// See the release notes at https://golang.org/doc/devel/release.html#go1.15.minor
+// See the release notes at https://tip.golang.org/doc/go1.17
 //
 // File bugs at https://golang.org/issues/new
 package main
@@ -20,5 +20,5 @@ package main
 import "github.com/rustatian/dl/internal/version"
 
 func main() {
-	version.Run("go1.15.8")
+	version.Run("go1.17beta1")
 }

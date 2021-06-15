@@ -104,7 +104,7 @@ var mainTmpl = template.Must(template.New("main").Parse(`// Copyright {{.Year}} 
 //
 // To install, run:
 //
-//     $ go get github.com/48d90782/dl/{{.Version}}
+//     $ go get github.com/rustatian/dl/{{.Version}}
 //     $ {{.Version}} download
 //
 // And then use the {{.Version}} command as if it were your normal go
@@ -115,7 +115,7 @@ var mainTmpl = template.Must(template.New("main").Parse(`// Copyright {{.Year}} 
 // File bugs at https://golang.org/issues/new
 package main
 
-import "github.com/48d90782/dl/internal/version"
+import "github.com/rustatian/dl/internal/version"
 
 func main() {
 	version.Run("{{.Version}}")
@@ -123,9 +123,9 @@ func main() {
 `))
 
 // golangOrgDlRoot determines the directory corresponding to the root
-// of module github.com/48d90782/dl by invoking 'go list -m' in module mode.
+// of module github.com/rustatian/dl by invoking 'go list -m' in module mode.
 // It must be called with a working directory that is contained
-// by the github.com/48d90782/dl module, otherwise it returns an error.
+// by the github.com/rustatian/dl module, otherwise it returns an error.
 func golangOrgDlRoot() (string, error) {
 	cmd := exec.Command("go", "list", "-m", "-json")
 	cmd.Env = append(os.Environ(), "GO111MODULE=on")
@@ -143,8 +143,8 @@ func golangOrgDlRoot() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	if mod.Path != "github.com/48d90782/dl" {
-		return "", fmt.Errorf("working directory must be in module github.com/48d90782/dl, but 'go list -m' reports it's currently in module %s", mod.Path)
+	if mod.Path != "github.com/rustatian/dl" {
+		return "", fmt.Errorf("working directory must be in module github.com/rustatian/dl, but 'go list -m' reports it's currently in module %s", mod.Path)
 	}
 	return mod.Dir, nil
 }

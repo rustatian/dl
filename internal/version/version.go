@@ -18,6 +18,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"os/signal"
 	"os/user"
 	"path"
 	"path/filepath"
@@ -60,6 +61,9 @@ func Run(version string) {
 		newPath += string(filepath.ListSeparator) + p
 	}
 	cmd.Env = dedupEnv(caseInsensitiveEnv, append(os.Environ(), "GOROOT="+root, "PATH="+newPath))
+
+	handleSignals()
+
 	if err := cmd.Run(); err != nil {
 		// TODO: return the same exit status maybe.
 		os.Exit(1)
@@ -392,10 +396,6 @@ func getOS() string {
 func versionArchiveURL(version string) string {
 	goos := getOS()
 
-	// TODO: Maybe we should parse
-	// https://storage.googleapis.com/go-builder-data/dl-index.txt ?
-	// Let's just guess the URL for now and see if it's there.
-	// Then we don't have to maintain that txt file too.
 	ext := ".tar.gz"
 	if goos == "windows" {
 		ext = ".zip"
@@ -404,7 +404,7 @@ func versionArchiveURL(version string) string {
 	if goos == "linux" && runtime.GOARCH == "arm" {
 		arch = "armv6l"
 	}
-	return "https://storage.googleapis.com/golang/" + version + "." + goos + "-" + arch + ext
+	return "https://dl.google.com/go/" + version + "." + goos + "-" + arch + ext
 }
 
 const caseInsensitiveEnv = runtime.GOOS == "windows"
@@ -501,4 +501,10 @@ func dedupEnv(caseInsensitive bool, env []string) []string {
 		}
 	}
 	return out
+}
+
+func handleSignals() {
+	// Ensure that signals intended for the child process are not handled by
+	// this process' runtime (e.g. SIGQUIT). See issue #36976.
+	signal.Notify(make(chan os.Signal), signalsToIgnore...)
 }

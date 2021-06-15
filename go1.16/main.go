@@ -17,7 +17,7 @@
 // File bugs at https://golang.org/issues/new
 package main
 
-import "github.com/48d90782/dl/internal/version"
+import "github.com/rustatian/dl/internal/version"
 
 func main() {
 	version.Run("go1.16")
