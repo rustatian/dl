@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
+//go:build go1.13
 // +build go1.13
 
 // The genv command generates version-specific go command source files.
@@ -104,7 +105,7 @@ var mainTmpl = template.Must(template.New("main").Parse(`// Copyright {{.Year}} 
 //
 // To install, run:
 //
-//     $ go get github.com/rustatian/dl/{{.Version}}
+//     $ go install github.com/rustatian/dl/{{.Version}}@latest
 //     $ {{.Version}} download
 //
 // And then use the {{.Version}} command as if it were your normal go
